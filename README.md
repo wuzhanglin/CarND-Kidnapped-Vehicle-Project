@@ -116,7 +116,42 @@ All other data the simulator provides, such as observations and controls.
 If our particle filter passes the current grading code in the simulator (we can make sure we have the current version at any time by doing a `git pull`), then we should pass!
 
 The things the grading code is looking for are:
-
 1. **Accuracy**: Our particle filter should localize vehicle position and yaw to within the values specified in the parameters `max_translation_error` and `max_yaw_error` in `src/main.cpp`.
-
 2. **Performance**: Our particle filter should complete execution within the time of 100 seconds.
+
+## Run the Particle Filter
+
+Run the `./run.sh`, and here is the output:
+```
+Listening to port 4567
+Connected!!!
+```
+
+Which means the our Particle Filter program has connected to the simulator successfully.
+
+### The Start View of the Simulator
+
+![Start View of the Simulator](README-images/start.png)
+
+### Test Data and Accuracy
+
+The simulator provides the test data and checks the accuracy.
+
+### Test with the Simulator
+
+Here is the final state of the simulator after running the Particle Filter:
+
+![Run Particle Filter](README-images/run-particle-filter.png)
+
+Here is a snapshot on the log of the Particle Filter:
+
+![Particle Filter Log](README-images/run-particle-filter-log.png)
+
+### The Implementation of the Particle Filter
+
+The Particle Filter is implemented in [src/particle_filter.cpp](./src/particle_filter.cpp):
+- Initialization: Particle initialization is implemented in [ParticleFilter::init](./src/particle_filter.cpp#L27) from line 27 to line 67.
+- Prediction: The prediction step is implemented in [ParticleFilter::prediction](./src/particle_filter.cpp#L69) from line 69 to line 110.
+- Updating Weights : This is an important operation in my opinion. It is implemented in [ParticleFilter::updateWeights](./src/particle_filter.cpp#L152) from line 152 to line 248.
+
+The rest of the implementation are is mainly in [src/main.cpp](./src/main.cpp). The event handler declared at [line 56](./src/main.cpp#L56) parses the received message and call the above Particle Filter methods.
