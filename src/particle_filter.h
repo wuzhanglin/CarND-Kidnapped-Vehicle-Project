@@ -10,6 +10,7 @@
 #define PARTICLE_FILTER_H_
 
 #include "helper_functions.h"
+#include <random>
 
 struct Particle
 {
@@ -87,10 +88,10 @@ public:
      */
     void updateWeights(double sensor_range,
                        double std_landmark[],
-                       const std::vector<LandmarkObs> &observations,
-                       const Map &map_landmarks);
+                       const std::vector<LandmarkObs>& observations,
+                       const Map& map_landmarks);
     
-    /**
+    /*
      * Resample from the updated set of particles to form the new set of particles
      */
     void resample();
@@ -100,7 +101,7 @@ public:
      *
      * This can be a very useful debugging tool to make sure transformations are correct and assocations correctly connected.
      */
-    Particle SetAssociations(Particle& particle,
+    Particle SetAssociations(Particle particle,
                              const std::vector<int>& associations,
                              const std::vector<double>& sense_x,
                              const std::vector<double>& sense_y);
@@ -121,6 +122,8 @@ private:
     
     // Number of particles to draw
     int num_particles;
+    
+    std::default_random_engine gen;
     
     // Flag, if filter is initialized
     bool is_initialized;
